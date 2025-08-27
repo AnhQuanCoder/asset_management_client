@@ -10,6 +10,7 @@ const StaffsPage = React.lazy(() => import("pages/staffs"));
 const SuppliersPage = React.lazy(() => import("pages/suppliers"));
 const BorrowPage = React.lazy(() => import("pages/borrow"));
 const ServicesPage = React.lazy(() => import("pages/services"));
+const PrivateRoute = React.lazy(() => import("components/private-router"));
 
 const routes = createBrowserRouter([
   {
@@ -18,16 +19,21 @@ const routes = createBrowserRouter([
   },
   {
     path: "/",
-    element: <LayoutDefault />,
+    element: <PrivateRoute />,
     children: [
-      { index: true, element: <HomePage /> },
-      { path: "categories", element: <CategoriesPage /> },
-      { path: "assets", element: <AssetsPage /> },
-      { path: "staffs", element: <StaffsPage /> },
-      { path: "suppliers", element: <SuppliersPage /> },
-      { path: "borrow-and-pay", element: <BorrowPage /> },
-      { path: "services", element: <ServicesPage /> },
-    ]
+      {
+        element: <LayoutDefault />,
+        children: [
+          { index: true, element: <HomePage /> },
+          { path: "categories", element: <CategoriesPage /> },
+          { path: "assets", element: <AssetsPage /> },
+          { path: "staffs", element: <StaffsPage /> },
+          { path: "suppliers", element: <SuppliersPage /> },
+          { path: "borrow-and-pay", element: <BorrowPage /> },
+          { path: "services", element: <ServicesPage /> },
+        ],
+      },
+    ],
   },
 ]);
 
