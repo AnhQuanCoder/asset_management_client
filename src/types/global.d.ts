@@ -28,4 +28,8 @@ declare global {
     access_token: string;
     user: IUser;
   }
+
+  interface IGetAccount {
+    user: IUser;
+  }
 }
