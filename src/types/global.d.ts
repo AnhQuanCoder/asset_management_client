@@ -17,13 +17,15 @@ declare global {
     result: T[]
   }
 
+  interface IUser {
+    _id: string;
+    email: string;
+    fullName: string;
+    role: string;
+  }
+
   interface ILogin {
     access_token: string;
-    user: {
-      _id: string;
-      email: string;
-      fullName: string;
-      role: string;
-    }
+    user: IUser;
   }
 }

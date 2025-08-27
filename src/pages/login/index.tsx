@@ -1,15 +1,18 @@
 import React from "react";
 import { EyeInvisibleOutlined, EyeOutlined, IdcardOutlined, LaptopOutlined, LockOutlined, MailOutlined, PhoneOutlined, ReadOutlined, UserOutlined } from "@ant-design/icons";
 import { App } from "antd";
+import { useDispatch } from "react-redux";
+import { data, useNavigate } from "react-router-dom";
 
 import "styles/index.css";
 import { loginAPI } from "@/services/auth.service";
-import { useNavigate } from "react-router-dom";
+import { login } from "@/redux/auth/authSlice";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = React.useState<boolean>(false);
   const { message } = App.useApp();
   const navigate = useNavigate();
+  const dispatch = useDispatch()
 
   const handleSubmit = React.useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -20,6 +23,8 @@ const LoginPage = () => {
     const res = await loginAPI({ username, password });
     if (res.data) {
       message.success("Đăng nhập thành công!");
+      dispatch(login({ user: res.data.user }));
+      localStorage.setItem("access_token", res.data.access_token);
       navigate("/");
     } else {
       message.error(res.message);
