@@ -16,4 +16,14 @@ declare global {
     },
     result: T[]
   }
+
+  interface ILogin {
+    access_token: string;
+    user: {
+      _id: string;
+      email: string;
+      fullName: string;
+      role: string;
+    }
+  }
 }
