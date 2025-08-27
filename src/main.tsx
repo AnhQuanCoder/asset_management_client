@@ -1,10 +1,13 @@
-import React, { StrictMode } from 'react'
+import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import {
+  RouterProvider,
+} from "react-router"
 
-const LayoutDefault = React.lazy(() => import("layouts/layout-default"));
+import routes from "routes/index";
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <LayoutDefault />
+    <RouterProvider router={routes} />
   </StrictMode>,
 )
