@@ -11,3 +11,8 @@ export const getAccountAPI = () => {
   const urlBackend = `${END_POINT}/account`;
   return axios.get<IBackendRes<IGetAccount>>(urlBackend);
 }
+
+export const logoutAPI = () => {
+  const urlBackend = `${END_POINT}/logout`;
+  return axios.post<IBackendRes<ILogin>>(urlBackend);
+}

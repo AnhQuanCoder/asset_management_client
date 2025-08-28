@@ -7,6 +7,8 @@ import LogoSiderWrap from "assets/logo-sider-wrap.png";
 import { Layout, Menu, type MenuProps } from "antd";
 import { useDispatch } from "react-redux";
 import { DashboardOutlined, LockOutlined, LogoutOutlined, PayCircleOutlined, TagsOutlined, TeamOutlined, ToolOutlined, UsergroupAddOutlined, UserOutlined } from "@ant-design/icons";
+import { logoutAPI } from "services/auth.service";
+import { logout } from "@/redux/auth/authSlice";
 
 const { Sider, Content } = Layout;
 const HeaderComponent = React.lazy(() => import("layouts/header-component"));
@@ -21,12 +23,12 @@ const LayoutDefault = () => {
   const [collapsed, setCollapsed] = React.useState<boolean>(false);
 
   const handleLogout = React.useCallback(async () => {
-    // const res = await logoutAPI();
-    // if (res.data) {
-    //   localStorage.removeItem("access_token");
-    //   dispatch(logout());
-    //   navigate("/admin/login");
-    // }
+    const res = await logoutAPI();
+    if (res.data) {
+      localStorage.removeItem("access_token");
+      dispatch(logout());
+      navigate("/login");
+    }
   }, [])
 
   const menuItem: MenuItem[] = React.useMemo(() => [
@@ -113,7 +115,7 @@ const LayoutDefault = () => {
           collapsed={collapsed}
         >
           <div className="h-65px flex justify-center border-b border-b-[#edf2f9] cursor-pointer border-r border-r-[#edf2f9]">
-            <Link to="/admin/">
+            <Link to="/">
               <img src={collapsed ? LogoSiderWrap : LogoSider} className="object-contain " />
             </Link>
           </div>
