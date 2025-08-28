@@ -24,6 +24,16 @@ declare global {
     role: string;
   }
 
+  interface ICreatedBy {
+    _id: string;
+    email: string;
+  }
+
+  interface IUpdatedBy {
+    _id: string;
+    email: string;
+  }
+
   interface ILogin {
     access_token: string;
     user: IUser;
@@ -31,5 +41,15 @@ declare global {
 
   interface IGetAccount {
     user: IUser;
+  }
+
+  interface ICategories {
+    _id: string;
+    name: string;
+    category_code: string;
+    createdAt: string;
+    updatedAt: string;
+    createdBy: ICreatedBy;
+    updatedBy: IUpdatedBy;
   }
 }
