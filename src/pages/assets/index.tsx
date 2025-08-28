@@ -3,7 +3,7 @@ import React from "react";
 const AssetsPage = () => {
   return (
     <>
-
+      AssetsPage
     </>
   )
 }
