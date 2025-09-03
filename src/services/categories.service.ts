@@ -16,3 +16,8 @@ export const editCategoryById = (id: string, data: any) => {
   const urlBackend = `${END_POINT}/${id}`;
   return axios.patch<IBackendRes<ICategories>>(urlBackend, data);
 }
+
+export const deleteCategoryById = (id: string) => {
+  const urlBackend = `${END_POINT}/${id}`;
+  return axios.delete<IBackendRes<ICategories>>(urlBackend);
+}

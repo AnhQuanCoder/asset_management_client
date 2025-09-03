@@ -4,7 +4,7 @@ import { App, Button, Popconfirm } from "antd";
 import React from "react";
 
 import { dateRangeValidate } from "@/helpers";
-import { fetchCategoriesAPI } from "@/services/categories.service";
+import { deleteCategoryById, fetchCategoriesAPI } from "@/services/categories.service";
 
 const CreateCategory = React.lazy(() => import("pages/categories/create"));
 const EditCategory = React.lazy(() => import("pages/categories/edit"));
@@ -74,7 +74,7 @@ const CategoriesPage = () => {
 
             <Popconfirm
               title="Bạn có chắc chắn muốn xóa bản ghi này không?"
-              // onConfirm={() => handleClickDelete(entity)}
+              onConfirm={() => handleClickDelete(entity)}
               okText="Xóa"
               cancelText="Hủy"
             >
@@ -144,6 +144,16 @@ const CategoriesPage = () => {
   const handleClickEdit = React.useCallback((data: ICategories) => {
     setOpenEdit(true);
     setDataEdit(data);
+  }, [])
+
+  const handleClickDelete = React.useCallback(async (data: ICategories) => {
+    const res = await deleteCategoryById(data._id);
+    if (res.data) {
+      message.success("Xóa bản ghi thành công!");
+      resetTable();
+    } else {
+      message.error("Xóa bản ghi thất bại!");
+    }
   }, [])
 
   return (
