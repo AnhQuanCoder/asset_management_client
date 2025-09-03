@@ -6,6 +6,8 @@ import React from "react";
 import { dateRangeValidate } from "@/helpers";
 import { fetchCategoriesAPI } from "@/services/categories.service";
 
+const CreateCategory = React.lazy(() => import("pages/categories/create"));
+
 type TSearch = App.Pages.Categories.TSearch;
 
 const CategoriesPage = () => {
@@ -18,6 +20,7 @@ const CategoriesPage = () => {
     pages: 0,
     total: 0
   })
+  const [openCreate, setOpenCreate] = React.useState<boolean>();
 
   const columns: ProColumns<ICategories>[] = React.useMemo(() => [
     {
@@ -125,6 +128,10 @@ const CategoriesPage = () => {
     };
   }, [])
 
+  const resetTable = React.useCallback(() => {
+    actionRef.current?.reload();
+  }, [])
+
   return (
     <>
       <ProTable<ICategories, TSearch>
@@ -153,7 +160,7 @@ const CategoriesPage = () => {
             key="button"
             icon={<PlusOutlined />}
             onClick={() => {
-              // setOpenCreate(true)
+              setOpenCreate(true)
             }}
             type="primary"
           >
@@ -162,12 +169,14 @@ const CategoriesPage = () => {
         ]}
       />
 
-      {/* 
-      <CreateBuilding
+      <CreateCategory
         openCreate={openCreate}
         setOpenCreate={setOpenCreate}
         resetTable={resetTable}
       />
+
+      {/* 
+      
 
       <EditBuilding
         openEdit={openEdit}
