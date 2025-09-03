@@ -7,6 +7,7 @@ import { dateRangeValidate } from "@/helpers";
 import { fetchCategoriesAPI } from "@/services/categories.service";
 
 const CreateCategory = React.lazy(() => import("pages/categories/create"));
+const EditCategory = React.lazy(() => import("pages/categories/edit"));
 
 type TSearch = App.Pages.Categories.TSearch;
 
@@ -21,6 +22,8 @@ const CategoriesPage = () => {
     total: 0
   })
   const [openCreate, setOpenCreate] = React.useState<boolean>();
+  const [openEdit, setOpenEdit] = React.useState<boolean>();
+  const [dataEdit, setDataEdit] = React.useState<ICategories>();
 
   const columns: ProColumns<ICategories>[] = React.useMemo(() => [
     {
@@ -47,6 +50,12 @@ const CategoriesPage = () => {
       hideInSearch: true,
     },
     {
+      title: "Người tạo",
+      render(_dom, entity, _index, _action, _schema) {
+        return <>{entity.createdBy.email}</>
+      },
+    },
+    {
       title: 'Thời gian tạo',
       dataIndex: 'createdAtRange',
       valueType: 'dateRange',
@@ -60,7 +69,7 @@ const CategoriesPage = () => {
           <>
             <EditOutlined
               style={{ cursor: "pointer", marginRight: "15px", color: "#f57800" }}
-            // onClick={() => handleClickEdit(entity)}
+              onClick={() => handleClickEdit(entity)}
             />
 
             <Popconfirm
@@ -132,6 +141,11 @@ const CategoriesPage = () => {
     actionRef.current?.reload();
   }, [])
 
+  const handleClickEdit = React.useCallback((data: ICategories) => {
+    setOpenEdit(true);
+    setDataEdit(data);
+  }, [])
+
   return (
     <>
       <ProTable<ICategories, TSearch>
@@ -175,16 +189,13 @@ const CategoriesPage = () => {
         resetTable={resetTable}
       />
 
-      {/* 
-      
-
-      <EditBuilding
+      <EditCategory
         openEdit={openEdit}
         setOpenEdit={setOpenEdit}
         dataEdit={dataEdit}
         setDataEdit={setDataEdit}
         resetTable={resetTable}
-      /> */}
+      />
     </>
   )
 }

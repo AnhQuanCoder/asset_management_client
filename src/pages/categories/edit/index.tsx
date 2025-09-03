@@ -1,25 +1,36 @@
+import { editCategoryById } from "@/services/categories.service";
 import { App, Form, Input, Modal, type FormProps } from "antd";
-import React from "react"
+import React from "react";
 
-import { createCategoryAPI } from "services/categories.service";
+type TProps = App.Pages.Categories.Edit.IProps;
+type FieldType = App.Pages.Categories.Edit.FieldType;
 
-type TProps = App.Pages.Categories.Create.IProps;
-type FieldType = App.Pages.Categories.Create.FieldType;
-
-const CreateCategory = (props: TProps) => {
-  const { openCreate, setOpenCreate, resetTable } = props;
+const EditCategory = (props: TProps) => {
+  const { dataEdit, setDataEdit, openEdit, setOpenEdit, resetTable } = props;
   const [form] = Form.useForm();
   const { message } = App.useApp();
 
+  React.useEffect(() => {
+    form.setFieldsValue({
+      name: dataEdit?.name,
+      category_code: dataEdit?.category_code
+    })
+  }, [dataEdit])
+
   const handleCancel = () => {
-    setOpenCreate(false);
+    setDataEdit(undefined);
+    setOpenEdit(false);
     form.resetFields();
   }
 
   const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
-    const res = await createCategoryAPI(values);
+    if (!dataEdit) {
+      return;
+    }
+    const res = await editCategoryById(dataEdit._id, values);
     if (res.data) {
-      message.success("Thêm mới kiểu tài sản thành công!");
+      message.success("Cập nhật kiểu tài sản thành công!");
+      setDataEdit(undefined);
       resetTable();
       handleCancel();
     } else {
@@ -30,8 +41,8 @@ const CreateCategory = (props: TProps) => {
   return (
     <>
       <Modal
-        title="Thêm mới kiểu tài sản"
-        open={openCreate}
+        title="Cập nhật kiểu tài sản"
+        open={openEdit}
         onOk={() => form.submit()}
         onCancel={handleCancel}
         okText="Thêm mới"
@@ -65,4 +76,4 @@ const CreateCategory = (props: TProps) => {
   )
 }
 
-export default React.memo(CreateCategory);
+export default React.memo(EditCategory);
