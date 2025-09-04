@@ -1,9 +1,231 @@
+import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
+import { ProTable, type ActionType, type ProColumns } from "@ant-design/pro-components";
+import { App, Button, Popconfirm } from "antd";
 import React from "react";
 
+import { fetchAssetsAPI } from "@/services/asset.service";
+import { dateRangeValidate, formatCurrency } from "@/helpers";
+
+type TSearch = App.Pages.Assets.TSearch;
+
 const AssetsPage = () => {
+  const { message } = App.useApp();
+
+  const actionRef = React.useRef<ActionType>(null!);
+  const [meta, setMeta] = React.useState({
+    current: 1,
+    pageSize: 10,
+    pages: 0,
+    total: 0
+  })
+  // const [openCreate, setOpenCreate] = React.useState<boolean>();
+  // const [openEdit, setOpenEdit] = React.useState<boolean>();
+  // const [dataEdit, setDataEdit] = React.useState<IAsset>();
+
+  const getDataTableData = React.useCallback(async (
+    params: any,
+    sort: Record<string, any>
+  ) => {
+    let query = ``;
+
+    if (params) {
+      query += `&current=${params.current}&pageSize=${params.pageSize}`;
+      if (params.name) {
+        query += `&name=/${params.name}/i`;
+      }
+      if (params.category_code) {
+        query += `&category_code=/${params.category_code}/i`;
+      }
+      const createDateRange = dateRangeValidate(params.createdAtRange);
+      if (createDateRange) {
+        query += `&createdAt>=${createDateRange[0]}&createdAt<=${createDateRange[1]}`;
+      }
+      if (params.status) {
+        query += `&status=${params.status}`;
+      }
+    }
+
+    if (sort && Object.keys(sort).length > 0) {
+      const sortFields: string[] = [];
+      Object.entries(sort).forEach(([field, order]) => {
+        if (order) {
+          sortFields.push(order === "ascend" ? field : `-${field}`);
+        }
+      });
+      query += `&sort=${sortFields.join(",")}`;
+    } else {
+      query += `&sort=-createdAt`;
+    }
+
+    const res = await fetchAssetsAPI(query);
+    if (res.data) {
+      setMeta(res.data.meta);
+    }
+
+    return {
+      data: res.data?.result || [],
+      page: params.current || 1,
+      success: true,
+      total: res.data?.meta.total || 0,
+    };
+  }, [])
+
+  const columns: ProColumns<IAsset>[] = React.useMemo(() => [
+    {
+      dataIndex: 'index',
+      valueType: 'indexBorder',
+      width: 48,
+    },
+    {
+      title: "Id",
+      dataIndex: "asset_code",
+      copyable: true,
+    },
+    {
+      title: 'Tên tài sản',
+      dataIndex: 'name',
+      copyable: true,
+      sorter: true,
+    },
+    {
+      title: 'Loại tài sản',
+      dataIndex: 'category_code',
+      hideInSearch: true,
+    },
+    {
+      title: 'Đơn vị',
+      dataIndex: 'unit',
+      hideInSearch: true,
+    },
+    {
+      title: 'Số lượng',
+      dataIndex: 'quantity',
+      hideInSearch: true,
+    },
+    {
+      title: 'Giá',
+      dataIndex: 'price',
+      sorter: true,
+      render(_dom, entity) {
+        return (
+          <span>
+            {formatCurrency(entity.price)}
+          </span>
+        )
+      }
+    },
+    {
+      title: 'Năm SX',
+      dataIndex: 'year_manufacture',
+      hideInSearch: true,
+    },
+    {
+      title: 'Nhà cung cấp',
+      dataIndex: 'supplier_code',
+      hideInSearch: true,
+    },
+    {
+      title: 'Thời gian tạo',
+      dataIndex: 'createdAt',
+      valueType: 'date',
+      sorter: true,
+      hideInSearch: true,
+    },
+    {
+      title: "Người tạo",
+      hideInSearch: true,
+      render(_dom, entity, _index, _action, _schema) {
+        return <>{entity.createdBy.email}</>
+      },
+    },
+    {
+      title: 'Thời gian tạo',
+      dataIndex: 'createdAtRange',
+      valueType: 'dateRange',
+      hideInTable: true,
+    },
+    {
+      title: "Hành động",
+      hideInSearch: true,
+      render(_dom, entity, _index, _action, _schema) {
+        return (
+          <>
+            <EditOutlined
+              style={{ cursor: "pointer", marginRight: "15px", color: "#f57800" }}
+            // onClick={() => handleClickEdit(entity)}
+            />
+
+            <Popconfirm
+              title="Bạn có chắc chắn muốn xóa bản ghi này không?"
+              // onConfirm={() => handleClickDelete(entity)}
+              okText="Xóa"
+              cancelText="Hủy"
+            >
+              <DeleteOutlined
+                style={{ cursor: "pointer", marginRight: "15px", color: "#ff4d4f" }}
+              />
+            </Popconfirm>
+
+          </>
+        )
+      },
+    }
+  ], [])
+
+  const resetTable = React.useCallback(() => {
+    actionRef.current?.reload();
+  }, [])
+
   return (
     <>
-      AssetsPage
+      <ProTable<IAsset, TSearch>
+        columns={columns}
+        actionRef={actionRef}
+        cardBordered
+        search={{ labelWidth: 'auto' }}
+        request={async (params, sort, _filter) => getDataTableData(params, sort)}
+        rowKey="_id"
+        pagination={{
+          current: meta.current,
+          pageSize: meta.pageSize,
+          showSizeChanger: true,
+          total: meta.total,
+          showTotal: (total, range) => {
+            return (
+              <div>
+                {range[0]}-{range[1]} trên {total} rows
+              </div>
+            )
+          }
+        }}
+        headerTitle="Bảng tài sản"
+        toolBarRender={() => [
+          <Button
+            key="button"
+            icon={<PlusOutlined />}
+            onClick={() => {
+              // setOpenCreate(true)
+            }}
+            type="primary"
+          >
+            Thêm mới tài sản
+          </Button>,
+        ]}
+      />
+
+      {/* <CreateCategory
+        openCreate={openCreate}
+        setOpenCreate={setOpenCreate}
+        resetTable={resetTable}
+      />
+
+      <EditCategory
+        openEdit={openEdit}
+        setOpenEdit={setOpenEdit}
+        dataEdit={dataEdit}
+        setDataEdit={setDataEdit}
+        resetTable={resetTable}
+      /> */}
     </>
   )
 }

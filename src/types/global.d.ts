@@ -52,4 +52,21 @@ declare global {
     createdBy: ICreatedBy;
     updatedBy: IUpdatedBy;
   }
+
+  interface IAsset {
+    _id: string;
+    name: string;
+    category_code: string;
+    unit: string;
+    asset_code: string;
+    quantity: number;
+    status: string;
+    year_manufacture: string;
+    supplier_code: string;
+    price: number;
+    createdAt: string;
+    updatedAt: string;
+    createdBy: ICreatedBy;
+    updatedBy: IUpdatedBy;
+  }
 }
