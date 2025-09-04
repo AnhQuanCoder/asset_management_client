@@ -33,18 +33,21 @@ const StaffsPage = () => {
       dataIndex: 'fullName',
       copyable: true,
       sorter: true,
+      render(_dom, entity) {
+        return (
+          <a href="#">{entity.fullName}</a>
+        )
+      }
     },
     {
       title: 'E-Mail',
       dataIndex: 'email',
       copyable: true,
-      sorter: true,
     },
     {
       title: 'Số điện thoại',
       dataIndex: 'phone',
       copyable: true,
-      sorter: true,
     },
     {
       title: 'Giới tính',
