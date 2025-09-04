@@ -6,6 +6,8 @@ import React from "react";
 import { fetchUsersAPI } from "@/services/staff.service";
 import { dateRangeValidate } from "@/helpers";
 
+const CreateStaff = React.lazy(() => import("pages/staffs/create"));
+
 type TSearch = App.Pages.Staffs.TSearch;
 
 const StaffsPage = () => {
@@ -18,7 +20,7 @@ const StaffsPage = () => {
     pages: 0,
     total: 0
   })
-  // const [openCreate, setOpenCreate] = React.useState<boolean>();
+  const [openCreate, setOpenCreate] = React.useState<boolean>();
   // const [openEdit, setOpenEdit] = React.useState<boolean>();
   // const [dataEdit, setDataEdit] = React.useState<ICategories>();
 
@@ -155,6 +157,24 @@ const StaffsPage = () => {
     };
   }, [])
 
+  const resetTable = React.useCallback(() => {
+    actionRef.current?.reload();
+  }, [])
+
+  // const handleClickEdit = React.useCallback((data: ICategories) => {
+  //     setOpenEdit(true);
+  //     setDataEdit(data);
+  //   }, [])
+
+  //   const handleClickDelete = React.useCallback(async (data: ICategories) => {
+  //     const res = await deleteCategoryById(data._id);
+  //     if (res.data) {
+  //       message.success("Xóa bản ghi thành công!");
+  //       resetTable();
+  //     } else {
+  //       message.error("Xóa bản ghi thất bại!");
+  //     }
+  //   }, [])
 
   return (
     <>
@@ -184,7 +204,7 @@ const StaffsPage = () => {
             key="button"
             icon={<PlusOutlined />}
             onClick={() => {
-              // setOpenCreate(true)
+              setOpenCreate(true)
             }}
             type="primary"
           >
@@ -193,11 +213,13 @@ const StaffsPage = () => {
         ]}
       />
 
-      {/* <CreateCategory
+      <CreateStaff
         openCreate={openCreate}
         setOpenCreate={setOpenCreate}
         resetTable={resetTable}
       />
+
+      {/* 
 
       <EditCategory
         openEdit={openEdit}
