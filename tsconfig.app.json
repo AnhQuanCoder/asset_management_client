@@ -39,6 +39,9 @@
       "redux/*": [
         "./src/redux/*"
       ],
+      "helpers/*": [
+        "./src/helpers/*"
+      ],
     },
     /* Bundler mode */
     "moduleResolution": "bundler",

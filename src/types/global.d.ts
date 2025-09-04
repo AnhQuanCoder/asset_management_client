@@ -69,4 +69,17 @@ declare global {
     createdBy: ICreatedBy;
     updatedBy: IUpdatedBy;
   }
+
+  interface IStaff {
+    _id: string;
+    fullName: string;
+    email: string;
+    phone: string;
+    gender: string;
+    address: string;
+    role: string;
+    createdBy: ICreatedBy;
+    createdAt: string;
+    updatedAt: string;
+  }
 }
