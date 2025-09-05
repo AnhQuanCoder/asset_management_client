@@ -7,6 +7,7 @@ import { dateRangeValidate } from "@/helpers";
 import { fetchSuppliersAPI } from "@/services/supplier.service";
 
 const CreateSupplier = React.lazy(() => import("pages/suppliers/create"));
+const EditSupplier = React.lazy(() => import("pages/suppliers/edit"));
 
 type TSearch = App.Pages.Suppliers.TSearch;
 
@@ -23,8 +24,6 @@ const SuppliersPage = () => {
   const [openCreate, setOpenCreate] = React.useState<boolean>(false);
   const [openEdit, setOpenEdit] = React.useState<boolean>(false);
   const [dataEdit, setDataEdit] = React.useState<ISupplier>();
-  const [openDetail, setOpenDetail] = React.useState<boolean>(false);
-  const [dataDetail, setDataDetail] = React.useState<ISupplier>();
 
   const columns: ProColumns<ISupplier>[] = React.useMemo(() => [
     {
@@ -157,11 +156,6 @@ const SuppliersPage = () => {
     setDataEdit(data);
   }, [])
 
-  const handleDetail = React.useCallback((data: ISupplier) => {
-    setDataDetail(data);
-    setOpenDetail(true);
-  }, [])
-
   const handleClickDelete = React.useCallback(async (data: ISupplier) => {
     // const res = await deleteUserAPI(data._id);
     // if (res.data) {
@@ -215,22 +209,13 @@ const SuppliersPage = () => {
         resetTable={resetTable}
       />
 
-      {/* 
-
-      <EditStaff
+      <EditSupplier
         openEdit={openEdit}
         setOpenEdit={setOpenEdit}
         dataEdit={dataEdit}
         setDataEdit={setDataEdit}
         resetTable={resetTable}
       />
-
-      <DetailStaff
-        openDetail={openDetail}
-        setOpenDetail={setOpenDetail}
-        dataDetail={dataDetail}
-        setDataDetail={setDataDetail}
-      /> */}
     </>
   )
 }
