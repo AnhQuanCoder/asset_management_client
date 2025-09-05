@@ -7,6 +7,7 @@ import { fetchUsersAPI } from "@/services/staff.service";
 import { dateRangeValidate } from "@/helpers";
 
 const CreateStaff = React.lazy(() => import("pages/staffs/create"));
+const EditStaff = React.lazy(() => import("pages/staffs/edit"));
 
 type TSearch = App.Pages.Staffs.TSearch;
 
@@ -21,8 +22,8 @@ const StaffsPage = () => {
     total: 0
   })
   const [openCreate, setOpenCreate] = React.useState<boolean>();
-  // const [openEdit, setOpenEdit] = React.useState<boolean>();
-  // const [dataEdit, setDataEdit] = React.useState<ICategories>();
+  const [openEdit, setOpenEdit] = React.useState<boolean>();
+  const [dataEdit, setDataEdit] = React.useState<IStaff>();
 
   const columns: ProColumns<IStaff>[] = React.useMemo(() => [
     {
@@ -90,7 +91,7 @@ const StaffsPage = () => {
           <>
             <EditOutlined
               style={{ cursor: "pointer", marginRight: "15px", color: "#f57800" }}
-            // onClick={() => handleClickEdit(entity)}
+              onClick={() => handleClickEdit(entity)}
             />
 
             <Popconfirm
@@ -161,10 +162,10 @@ const StaffsPage = () => {
     actionRef.current?.reload();
   }, [])
 
-  // const handleClickEdit = React.useCallback((data: ICategories) => {
-  //     setOpenEdit(true);
-  //     setDataEdit(data);
-  //   }, [])
+  const handleClickEdit = React.useCallback((data: IStaff) => {
+    setOpenEdit(true);
+    setDataEdit(data);
+  }, [])
 
   //   const handleClickDelete = React.useCallback(async (data: ICategories) => {
   //     const res = await deleteCategoryById(data._id);
@@ -219,15 +220,13 @@ const StaffsPage = () => {
         resetTable={resetTable}
       />
 
-      {/* 
-
-      <EditCategory
+      <EditStaff
         openEdit={openEdit}
         setOpenEdit={setOpenEdit}
         dataEdit={dataEdit}
         setDataEdit={setDataEdit}
         resetTable={resetTable}
-      /> */}
+      />
     </>
   )
 }
