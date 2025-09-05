@@ -3,7 +3,7 @@ import { ProTable, type ActionType, type ProColumns } from "@ant-design/pro-comp
 import { App, Button, Popconfirm, Tag } from "antd";
 
 import { dateRangeValidate } from "@/helpers";
-import { fetchBorrowsAPI } from "@/services/borrow.service";
+import { deleteBorrowAPI, fetchBorrowsAPI } from "@/services/borrow.service";
 import React from "react";
 
 const CreateBorrow = React.lazy(() => import("pages/borrow/create"));
@@ -187,13 +187,13 @@ const BorrowPage = () => {
   }, [])
 
   const handleClickDelete = React.useCallback(async (data: IBorrow) => {
-    // const res = await deleteSupplierAPI(data._id);
-    // if (res.data) {
-    //   message.success("Xóa bản ghi thành công!");
-    //   resetTable();
-    // } else {
-    //   message.error("Xóa bản ghi thất bại!");
-    // }
+    const res = await deleteBorrowAPI(data._id);
+    if (res.data) {
+      message.success("Xóa bản ghi thành công!");
+      resetTable();
+    } else {
+      message.error("Xóa bản ghi thất bại!");
+    }
   }, [])
 
   return (

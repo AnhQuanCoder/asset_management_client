@@ -16,3 +16,8 @@ export const editBorrowAPI = (id: string, data: any) => {
   const urlBackend = `${END_POINT}/${id}`;
   return axios.patch<IBackendRes<IBorrow>>(urlBackend, data);
 }
+
+export const deleteBorrowAPI = (id: string) => {
+  const urlBackend = `${END_POINT}/${id}`;
+  return axios.delete<IBackendRes<IBorrow>>(urlBackend);
+}
