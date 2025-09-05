@@ -94,4 +94,19 @@ declare global {
     updatedAt: string;
     updatedBy: IUpdatedBy;
   }
+
+  interface IBorrow {
+    _id: string;
+    asset_code: string;
+    number_borrow: number;
+    status: string;
+    fullName: string;
+    phone: string;
+    class: string;
+    department: string;
+    createdBy: ICreatedBy;
+    createdAt: string;
+    updatedAt: string;
+    updatedBy: IUpdatedBy;
+  }
 }
