@@ -4,7 +4,7 @@ import { App, Button, Popconfirm, Tag } from "antd";
 import React from "react";
 
 import { dateRangeValidate, formatCurrency } from "@/helpers";
-import { fetchServicesAPI } from "services/service.service";
+import { deleteServiceAPI, fetchServicesAPI } from "services/service.service";
 
 type TSearch = App.Pages.Service.TSearch;
 
@@ -126,7 +126,7 @@ const ServicesPage = () => {
 
             <Popconfirm
               title="Bạn có chắc chắn muốn xóa bản ghi này không?"
-              // onConfirm={() => handleClickDelete(entity)}
+              onConfirm={() => handleClickDelete(entity)}
               okText="Xóa"
               cancelText="Hủy"
             >
@@ -148,9 +148,6 @@ const ServicesPage = () => {
 
     if (params) {
       query += `&current=${params.current}&pageSize=${params.pageSize}`;
-      if (params.fullName) {
-        query += `&fullName=/${params.fullName}/i`;
-      }
       if (params.asset_name) {
         query += `&asset_name=/${params.asset_name}/i`;
       }
@@ -198,13 +195,13 @@ const ServicesPage = () => {
   }, [])
 
   const handleClickDelete = React.useCallback(async (data: IService) => {
-    // const res = await deleteBorrowAPI(data._id);
-    // if (res.data) {
-    //   message.success("Xóa bản ghi thành công!");
-    //   resetTable();
-    // } else {
-    //   message.error("Xóa bản ghi thất bại!");
-    // }
+    const res = await deleteServiceAPI(data._id);
+    if (res.data) {
+      message.success("Xóa bản ghi thành công!");
+      resetTable();
+    } else {
+      message.error("Xóa bản ghi thất bại!");
+    }
   }, [])
 
   return (
