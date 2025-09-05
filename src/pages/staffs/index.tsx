@@ -8,6 +8,7 @@ import { dateRangeValidate } from "@/helpers";
 
 const CreateStaff = React.lazy(() => import("pages/staffs/create"));
 const EditStaff = React.lazy(() => import("pages/staffs/edit"));
+const DetailStaff = React.lazy(() => import("pages/staffs/detail"));
 
 type TSearch = App.Pages.Staffs.TSearch;
 
@@ -21,9 +22,11 @@ const StaffsPage = () => {
     pages: 0,
     total: 0
   })
-  const [openCreate, setOpenCreate] = React.useState<boolean>();
-  const [openEdit, setOpenEdit] = React.useState<boolean>();
+  const [openCreate, setOpenCreate] = React.useState<boolean>(false);
+  const [openEdit, setOpenEdit] = React.useState<boolean>(false);
   const [dataEdit, setDataEdit] = React.useState<IStaff>();
+  const [openDetail, setOpenDetail] = React.useState<boolean>(false);
+  const [dataDetail, setDataDetail] = React.useState<IStaff>();
 
   const columns: ProColumns<IStaff>[] = React.useMemo(() => [
     {
@@ -38,7 +41,7 @@ const StaffsPage = () => {
       sorter: true,
       render(_dom, entity) {
         return (
-          <a href="#">{entity.fullName}</a>
+          <a href="#" onClick={() => handleDetail(entity)}>{entity.fullName}</a>
         )
       }
     },
@@ -167,6 +170,11 @@ const StaffsPage = () => {
     setDataEdit(data);
   }, [])
 
+  const handleDetail = React.useCallback((data: IStaff) => {
+    setDataDetail(data);
+    setOpenDetail(true);
+  }, [])
+
   //   const handleClickDelete = React.useCallback(async (data: ICategories) => {
   //     const res = await deleteCategoryById(data._id);
   //     if (res.data) {
@@ -226,6 +234,13 @@ const StaffsPage = () => {
         dataEdit={dataEdit}
         setDataEdit={setDataEdit}
         resetTable={resetTable}
+      />
+
+      <DetailStaff
+        openDetail={openDetail}
+        setOpenDetail={setOpenDetail}
+        dataDetail={dataDetail}
+        setDataDetail={setDataDetail}
       />
     </>
   )
