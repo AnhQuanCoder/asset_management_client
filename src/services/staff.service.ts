@@ -16,3 +16,8 @@ export const editUserAPI = (id: string, data: any) => {
   const urlBackend = `${END_POINT}/${id}`;
   return axios.patch<IBackendRes<IStaff>>(urlBackend, data);
 }
+
+export const deleteUserAPI = (id: string) => {
+  const urlBackend = `${END_POINT}/${id}`;
+  return axios.delete<IBackendRes<IStaff>>(urlBackend);
+}

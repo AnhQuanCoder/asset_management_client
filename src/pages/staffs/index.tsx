@@ -3,7 +3,7 @@ import { ProTable, type ActionType, type ProColumns } from "@ant-design/pro-comp
 import { App, Button, Popconfirm, Tag } from "antd";
 import React from "react";
 
-import { fetchUsersAPI } from "@/services/staff.service";
+import { deleteUserAPI, fetchUsersAPI } from "services/staff.service";
 import { dateRangeValidate } from "@/helpers";
 
 const CreateStaff = React.lazy(() => import("pages/staffs/create"));
@@ -99,7 +99,7 @@ const StaffsPage = () => {
 
             <Popconfirm
               title="Bạn có chắc chắn muốn xóa bản ghi này không?"
-              // onConfirm={() => handleClickDelete(entity)}
+              onConfirm={() => handleClickDelete(entity)}
               okText="Xóa"
               cancelText="Hủy"
             >
@@ -175,15 +175,15 @@ const StaffsPage = () => {
     setOpenDetail(true);
   }, [])
 
-  //   const handleClickDelete = React.useCallback(async (data: ICategories) => {
-  //     const res = await deleteCategoryById(data._id);
-  //     if (res.data) {
-  //       message.success("Xóa bản ghi thành công!");
-  //       resetTable();
-  //     } else {
-  //       message.error("Xóa bản ghi thất bại!");
-  //     }
-  //   }, [])
+  const handleClickDelete = React.useCallback(async (data: IStaff) => {
+    const res = await deleteUserAPI(data._id);
+    if (res.data) {
+      message.success("Xóa bản ghi thành công!");
+      resetTable();
+    } else {
+      message.error("Xóa bản ghi thất bại!");
+    }
+  }, [])
 
   return (
     <>
