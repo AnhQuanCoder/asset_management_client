@@ -7,6 +7,7 @@ import { fetchBorrowsAPI } from "@/services/borrow.service";
 import React from "react";
 
 const CreateBorrow = React.lazy(() => import("pages/borrow/create"));
+const EditBorrow = React.lazy(() => import("pages/borrow/edit"));
 
 type TSearch = App.Pages.Borrow.TSearch;
 
@@ -238,15 +239,13 @@ const BorrowPage = () => {
         resetTable={resetTable}
       />
 
-      {/* 
-
-      <EditSupplier
+      <EditBorrow
         openEdit={openEdit}
         setOpenEdit={setOpenEdit}
         dataEdit={dataEdit}
         setDataEdit={setDataEdit}
         resetTable={resetTable}
-      /> */}
+      />
     </>
   )
 }

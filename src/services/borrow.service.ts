@@ -6,7 +6,13 @@ export const fetchBorrowsAPI = (params: string) => {
   const urlBackend = `${END_POINT}?${params}`;
   return axios.get<IBackendRes<IModelPaginate<IBorrow>>>(urlBackend);
 }
+
 export const createBorrowAPI = (data: any) => {
   const urlBackend = `${END_POINT}`;
   return axios.post<IBackendRes<IBorrow>>(urlBackend, data);
+}
+
+export const editBorrowAPI = (id: string, data: any) => {
+  const urlBackend = `${END_POINT}/${id}`;
+  return axios.patch<IBackendRes<IBorrow>>(urlBackend, data);
 }
