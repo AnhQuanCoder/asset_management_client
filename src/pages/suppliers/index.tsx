@@ -6,6 +6,8 @@ import React from "react";
 import { dateRangeValidate } from "@/helpers";
 import { fetchSuppliersAPI } from "@/services/supplier.service";
 
+const CreateSupplier = React.lazy(() => import("pages/suppliers/create"));
+
 type TSearch = App.Pages.Suppliers.TSearch;
 
 const SuppliersPage = () => {
@@ -207,11 +209,13 @@ const SuppliersPage = () => {
         ]}
       />
 
-      {/* <CreateStaff
+      <CreateSupplier
         openCreate={openCreate}
         setOpenCreate={setOpenCreate}
         resetTable={resetTable}
       />
+
+      {/* 
 
       <EditStaff
         openEdit={openEdit}
