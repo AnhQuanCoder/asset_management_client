@@ -2,8 +2,9 @@ import axios from "services/axios.customize";
 
 const END_POINT = `/assets`;
 
-export const fetchAssetsAPI = (params: string) => {
-  const urlBackend = `${END_POINT}?${params}`;
+export const fetchAssetsAPI = (params?: string) => {
+  const urlBackend = params ? `${END_POINT}?${params}` : `${END_POINT}?current=1&pageSize=1000&sort=-createdBy`
+  // const urlBackend = `${END_POINT}?${params}`;
   return axios.get<IBackendRes<IModelPaginate<IAsset>>>(urlBackend);
 }
 

@@ -6,6 +6,8 @@ import { dateRangeValidate } from "@/helpers";
 import { fetchBorrowsAPI } from "@/services/borrow.service";
 import React from "react";
 
+const CreateBorrow = React.lazy(() => import("pages/borrow/create"));
+
 type TSearch = App.Pages.Borrow.TSearch;
 
 const BorrowPage = () => {
@@ -29,8 +31,8 @@ const BorrowPage = () => {
       width: 48,
     },
     {
-      title: 'Mã tài sản',
-      dataIndex: 'asset_code',
+      title: 'Tên tài sản',
+      dataIndex: 'asset_name',
       copyable: true,
     },
     {
@@ -137,8 +139,8 @@ const BorrowPage = () => {
       if (params.fullName) {
         query += `&fullName=/${params.fullName}/i`;
       }
-      if (params.asset_code) {
-        query += `&asset_code=/${params.asset_code}/i`;
+      if (params.asset_name) {
+        query += `&asset_name=/${params.asset_name}/i`;
       }
       if (params.status) {
         query += `&status=${params.status}`;
@@ -230,11 +232,13 @@ const BorrowPage = () => {
         ]}
       />
 
-      {/* <CreateSupplier
+      <CreateBorrow
         openCreate={openCreate}
         setOpenCreate={setOpenCreate}
         resetTable={resetTable}
       />
+
+      {/* 
 
       <EditSupplier
         openEdit={openEdit}

@@ -97,7 +97,7 @@ declare global {
 
   interface IBorrow {
     _id: string;
-    asset_code: string;
+    asset_name: string;
     number_borrow: number;
     status: string;
     fullName: string;
