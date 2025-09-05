@@ -82,4 +82,16 @@ declare global {
     createdAt: string;
     updatedAt: string;
   }
+
+  interface ISupplier {
+    _id: string;
+    name: string;
+    phone: string;
+    address: string;
+    supplier_code: string;
+    createdBy: ICreatedBy;
+    createdAt: string;
+    updatedAt: string;
+    updatedBy: IUpdatedBy;
+  }
 }
