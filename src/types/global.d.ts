@@ -109,4 +109,20 @@ declare global {
     updatedAt: string;
     updatedBy: IUpdatedBy;
   }
+
+  interface IService {
+    _id: string;
+    asset_name: string;
+    price: number;
+    reason_failure: string;
+    quantity: number;
+    fullName: string;
+    phone: string;
+    address: string;
+    status: string;
+    createdBy: ICreatedBy;
+    createdAt: string;
+    updatedBy: IUpdatedBy;
+    updatedAt: string;
+  }
 }
