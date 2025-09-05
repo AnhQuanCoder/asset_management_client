@@ -16,3 +16,8 @@ export const editSupplierAPI = (id: string, data: any) => {
   const urlBackend = `${END_POINT}/${id}`;
   return axios.patch<IBackendRes<ISupplier>>(urlBackend, data);
 }
+
+export const deleteSupplierAPI = (id: string) => {
+  const urlBackend = `${END_POINT}/${id}`;
+  return axios.delete<IBackendRes<ISupplier>>(urlBackend);
+}

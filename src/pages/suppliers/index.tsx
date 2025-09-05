@@ -4,7 +4,7 @@ import { App, Button, Popconfirm } from "antd";
 import React from "react";
 
 import { dateRangeValidate } from "@/helpers";
-import { fetchSuppliersAPI } from "@/services/supplier.service";
+import { deleteSupplierAPI, fetchSuppliersAPI } from "services/supplier.service";
 
 const CreateSupplier = React.lazy(() => import("pages/suppliers/create"));
 const EditSupplier = React.lazy(() => import("pages/suppliers/edit"));
@@ -157,13 +157,13 @@ const SuppliersPage = () => {
   }, [])
 
   const handleClickDelete = React.useCallback(async (data: ISupplier) => {
-    // const res = await deleteUserAPI(data._id);
-    // if (res.data) {
-    //   message.success("Xóa bản ghi thành công!");
-    //   resetTable();
-    // } else {
-    //   message.error("Xóa bản ghi thất bại!");
-    // }
+    const res = await deleteSupplierAPI(data._id);
+    if (res.data) {
+      message.success("Xóa bản ghi thành công!");
+      resetTable();
+    } else {
+      message.error("Xóa bản ghi thất bại!");
+    }
   }, [])
 
   return (
