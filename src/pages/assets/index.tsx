@@ -7,6 +7,7 @@ import { deleteAssetById, fetchAssetsAPI } from "services/asset.service";
 import { dateRangeValidate, formatCurrency } from "@/helpers";
 
 const CreateAsset = React.lazy(() => import("pages/assets/create"));
+const EditAsset = React.lazy(() => import("pages/assets/edit"));
 
 type TSearch = App.Pages.Assets.TSearch;
 
@@ -21,8 +22,8 @@ const AssetsPage = () => {
     total: 0
   })
   const [openCreate, setOpenCreate] = React.useState<boolean>(false);
-  // const [openEdit, setOpenEdit] = React.useState<boolean>(false);
-  // const [dataEdit, setDataEdit] = React.useState<IAsset>(false);
+  const [openEdit, setOpenEdit] = React.useState<boolean>(false);
+  const [dataEdit, setDataEdit] = React.useState<IAsset>();
 
   const getDataTableData = React.useCallback(async (
     params: any,
@@ -154,7 +155,7 @@ const AssetsPage = () => {
           <>
             <EditOutlined
               style={{ cursor: "pointer", marginRight: "15px", color: "#f57800" }}
-            // onClick={() => handleClickEdit(entity)}
+              onClick={() => handleClickEdit(entity)}
             />
 
             <Popconfirm
@@ -178,12 +179,12 @@ const AssetsPage = () => {
     actionRef.current?.reload();
   }, [])
 
-  // const handleClickEdit = React.useCallback((data: IService) => {
-  //   setOpenEdit(true);
-  //   setDataEdit(data);
-  // }, [])
+  const handleClickEdit = React.useCallback((data: IAsset) => {
+    setOpenEdit(true);
+    setDataEdit(data);
+  }, [])
 
-  const handleClickDelete = React.useCallback(async (data: IService) => {
+  const handleClickDelete = React.useCallback(async (data: IAsset) => {
     const res = await deleteAssetById(data._id);
     if (res.data) {
       message.success("Xóa bản ghi thành công!");
@@ -236,15 +237,13 @@ const AssetsPage = () => {
         resetTable={resetTable}
       />
 
-      {/* 
-
-      <EditCategory
+      <EditAsset
         openEdit={openEdit}
         setOpenEdit={setOpenEdit}
         dataEdit={dataEdit}
         setDataEdit={setDataEdit}
         resetTable={resetTable}
-      /> */}
+      />
     </>
   )
 }

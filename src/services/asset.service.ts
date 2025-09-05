@@ -12,12 +12,12 @@ export const createAssetAPI = (data: any) => {
   return axios.post<IBackendRes<IAsset>>(urlBackend, data);
 }
 
-// export const editCategoryById = (id: string, data: any) => {
-//   const urlBackend = `${END_POINT}/${id}`;
-//   return axios.patch<IBackendRes<ICategories>>(urlBackend, data);
-// }
+export const editAssetById = (id: string, data: any) => {
+  const urlBackend = `${END_POINT}/${id}`;
+  return axios.patch<IBackendRes<IAsset>>(urlBackend, data);
+}
 
 export const deleteAssetById = (id: string) => {
   const urlBackend = `${END_POINT}/${id}`;
-  return axios.delete<IBackendRes<ICategories>>(urlBackend);
+  return axios.delete<IBackendRes<IAsset>>(urlBackend);
 }
