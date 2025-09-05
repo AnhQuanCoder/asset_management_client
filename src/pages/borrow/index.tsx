@@ -61,7 +61,11 @@ const BorrowPage = () => {
     {
       title: 'Trạng thái',
       dataIndex: 'status',
-      hideInSearch: true,
+      valueType: "select",
+      valueEnum: {
+        PAID: { text: "Đã trả", status: "Success" },
+        UNPAID: { text: "Chưa trả", status: "Error" }
+      },
       render(_dom, entity) {
         return (
           <>
@@ -135,6 +139,9 @@ const BorrowPage = () => {
       }
       if (params.asset_code) {
         query += `&asset_code=/${params.asset_code}/i`;
+      }
+      if (params.status) {
+        query += `&status=${params.status}`;
       }
       const createDateRange = dateRangeValidate(params.createdAtRange);
       if (createDateRange) {
