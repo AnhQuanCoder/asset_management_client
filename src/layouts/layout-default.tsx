@@ -6,7 +6,7 @@ import LogoSider from "assets/logo-sider.png";
 import LogoSiderWrap from "assets/logo-sider-wrap.png";
 import { Layout, Menu, type MenuProps } from "antd";
 import { useDispatch } from "react-redux";
-import { DashboardOutlined, LockOutlined, LogoutOutlined, PayCircleOutlined, TagsOutlined, TeamOutlined, ToolOutlined, UsergroupAddOutlined, UserOutlined } from "@ant-design/icons";
+import { DashboardOutlined, FormOutlined, LockOutlined, LogoutOutlined, PayCircleOutlined, TagsOutlined, TeamOutlined, ToolOutlined, UsergroupAddOutlined, UserOutlined } from "@ant-design/icons";
 import { logoutAPI } from "services/auth.service";
 import { logout } from "@/redux/auth/authSlice";
 
@@ -59,7 +59,12 @@ const LayoutDefault = () => {
     },
     {
       key: 'borrow-and-pay',
-      label: <Link to="/borrow-and-pay">Quản lý sửa chữa</Link>,
+      label: <Link to="/borrow-and-pay">Quản lý mượn trả</Link>,
+      icon: <FormOutlined />
+    },
+    {
+      key: 'services',
+      label: <Link to="/services">Quản lý sửa chữa</Link>,
       icon: <ToolOutlined />
     },
     {
