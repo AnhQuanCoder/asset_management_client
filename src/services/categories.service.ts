@@ -2,8 +2,8 @@ import axios from "services/axios.customize";
 
 const END_POINT = `/categories`;
 
-export const fetchCategoriesAPI = (params: string) => {
-  const urlBackend = `${END_POINT}?${params}`;
+export const fetchCategoriesAPI = (params?: string) => {
+  const urlBackend = params ? `${END_POINT}?${params}` : `${END_POINT}?current=1&pageSize=1000&sort=-createdBy`;
   return axios.get<IBackendRes<IModelPaginate<ICategories>>>(urlBackend);
 }
 

@@ -6,6 +6,8 @@ import React from "react";
 import { fetchAssetsAPI } from "@/services/asset.service";
 import { dateRangeValidate, formatCurrency } from "@/helpers";
 
+const CreateAsset = React.lazy(() => import("pages/assets/create"));
+
 type TSearch = App.Pages.Assets.TSearch;
 
 const AssetsPage = () => {
@@ -18,9 +20,9 @@ const AssetsPage = () => {
     pages: 0,
     total: 0
   })
-  // const [openCreate, setOpenCreate] = React.useState<boolean>();
-  // const [openEdit, setOpenEdit] = React.useState<boolean>();
-  // const [dataEdit, setDataEdit] = React.useState<IAsset>();
+  const [openCreate, setOpenCreate] = React.useState<boolean>(false);
+  // const [openEdit, setOpenEdit] = React.useState<boolean>(false);
+  // const [dataEdit, setDataEdit] = React.useState<IAsset>(false);
 
   const getDataTableData = React.useCallback(async (
     params: any,
@@ -204,7 +206,7 @@ const AssetsPage = () => {
             key="button"
             icon={<PlusOutlined />}
             onClick={() => {
-              // setOpenCreate(true)
+              setOpenCreate(true)
             }}
             type="primary"
           >
@@ -213,11 +215,13 @@ const AssetsPage = () => {
         ]}
       />
 
-      {/* <CreateCategory
+      <CreateAsset
         openCreate={openCreate}
         setOpenCreate={setOpenCreate}
         resetTable={resetTable}
       />
+
+      {/* 
 
       <EditCategory
         openEdit={openEdit}
