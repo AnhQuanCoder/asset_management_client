@@ -16,3 +16,8 @@ export const createServiceAPI = (data: any) => {
   const urlBackend = `${END_POINT}`;
   return axios.post<IBackendRes<IService>>(urlBackend, data);
 }
+
+export const editServiceAPI = (id: string, data: any) => {
+  const urlBackend = `${END_POINT}/${id}`;
+  return axios.patch<IBackendRes<IService>>(urlBackend, data);
+}

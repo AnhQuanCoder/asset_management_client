@@ -7,6 +7,7 @@ import { dateRangeValidate, formatCurrency } from "@/helpers";
 import { deleteServiceAPI, fetchServicesAPI } from "services/service.service";
 
 const CreateService = React.lazy(() => import("pages/services/create"));
+const EditService = React.lazy(() => import("pages/services/edit"));
 
 type TSearch = App.Pages.Service.TSearch;
 
@@ -123,7 +124,7 @@ const ServicesPage = () => {
           <>
             <EditOutlined
               style={{ cursor: "pointer", marginRight: "15px", color: "#f57800" }}
-            // onClick={() => handleClickEdit(entity)}
+              onClick={() => handleClickEdit(entity)}
             />
 
             <Popconfirm
@@ -249,15 +250,13 @@ const ServicesPage = () => {
         resetTable={resetTable}
       />
 
-      {/* 
-
-      <EditBorrow
+      <EditService
         openEdit={openEdit}
         setOpenEdit={setOpenEdit}
         dataEdit={dataEdit}
         setDataEdit={setDataEdit}
         resetTable={resetTable}
-      /> */}
+      />
     </>
   )
 }
