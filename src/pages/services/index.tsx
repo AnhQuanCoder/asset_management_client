@@ -6,6 +6,8 @@ import React from "react";
 import { dateRangeValidate, formatCurrency } from "@/helpers";
 import { deleteServiceAPI, fetchServicesAPI } from "services/service.service";
 
+const CreateService = React.lazy(() => import("pages/services/create"));
+
 type TSearch = App.Pages.Service.TSearch;
 
 const ServicesPage = () => {
@@ -241,11 +243,13 @@ const ServicesPage = () => {
         ]}
       />
 
-      {/* <CreateBorrow
+      <CreateService
         openCreate={openCreate}
         setOpenCreate={setOpenCreate}
         resetTable={resetTable}
       />
+
+      {/* 
 
       <EditBorrow
         openEdit={openEdit}
