@@ -3,7 +3,7 @@ import { ProTable, type ActionType, type ProColumns } from "@ant-design/pro-comp
 import { App, Button, Popconfirm } from "antd";
 import React from "react";
 
-import { fetchAssetsAPI } from "@/services/asset.service";
+import { deleteAssetById, fetchAssetsAPI } from "services/asset.service";
 import { dateRangeValidate, formatCurrency } from "@/helpers";
 
 const CreateAsset = React.lazy(() => import("pages/assets/create"));
@@ -159,7 +159,7 @@ const AssetsPage = () => {
 
             <Popconfirm
               title="Bạn có chắc chắn muốn xóa bản ghi này không?"
-              // onConfirm={() => handleClickDelete(entity)}
+              onConfirm={() => handleClickDelete(entity)}
               okText="Xóa"
               cancelText="Hủy"
             >
@@ -176,6 +176,21 @@ const AssetsPage = () => {
 
   const resetTable = React.useCallback(() => {
     actionRef.current?.reload();
+  }, [])
+
+  // const handleClickEdit = React.useCallback((data: IService) => {
+  //   setOpenEdit(true);
+  //   setDataEdit(data);
+  // }, [])
+
+  const handleClickDelete = React.useCallback(async (data: IService) => {
+    const res = await deleteAssetById(data._id);
+    if (res.data) {
+      message.success("Xóa bản ghi thành công!");
+      resetTable();
+    } else {
+      message.error("Xóa bản ghi thất bại!");
+    }
   }, [])
 
   return (

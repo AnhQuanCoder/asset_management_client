@@ -17,7 +17,7 @@ export const createAssetAPI = (data: any) => {
 //   return axios.patch<IBackendRes<ICategories>>(urlBackend, data);
 // }
 
-// export const deleteCategoryById = (id: string) => {
-//   const urlBackend = `${END_POINT}/${id}`;
-//   return axios.delete<IBackendRes<ICategories>>(urlBackend);
-// }
+export const deleteAssetById = (id: string) => {
+  const urlBackend = `${END_POINT}/${id}`;
+  return axios.delete<IBackendRes<ICategories>>(urlBackend);
+}
