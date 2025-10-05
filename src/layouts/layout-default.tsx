@@ -47,11 +47,11 @@ const LayoutDefault = () => {
       label: <Link to="/assets">Tài sản</Link>,
       icon: <PayCircleOutlined />
     },
-    {
-      key: 'staffs',
-      label: <Link to="/staffs">Nhân viên</Link>,
-      icon: <TeamOutlined />
-    },
+    // {
+    //   key: 'staffs',
+    //   label: <Link to="/staffs">Nhân viên</Link>,
+    //   icon: <TeamOutlined />
+    // },
     {
       key: 'suppliers',
       label: <Link to="/suppliers">Nhà cung cấp</Link>,

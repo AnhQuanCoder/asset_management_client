@@ -2,7 +2,7 @@ import React from "react";
 import { EyeInvisibleOutlined, EyeOutlined, IdcardOutlined, LaptopOutlined, LockOutlined, MailOutlined, PhoneOutlined, ReadOutlined, UserOutlined } from "@ant-design/icons";
 import { App } from "antd";
 import { useDispatch } from "react-redux";
-import { data, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import "styles/index.css";
 import { loginAPI } from "@/services/auth.service";
