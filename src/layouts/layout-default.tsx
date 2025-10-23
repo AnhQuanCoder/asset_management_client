@@ -13,6 +13,7 @@ import { logout } from "redux/auth/authSlice";
 const { Sider, Content } = Layout;
 const HeaderComponent = React.lazy(() => import("layouts/header-component"));
 const ProfilePage = React.lazy(() => import("pages/profile"));
+const ChangePassword = React.lazy(() => import("pages/change-password"));
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -23,6 +24,7 @@ const LayoutDefault = () => {
   const navigate = useNavigate();
   const [collapsed, setCollapsed] = React.useState<boolean>(false);
   const [openProfile, setOpenProfile] = React.useState<boolean>(false);
+  const [openChangePassword, setOpenChangePassword] = React.useState<boolean>(false);
 
   const handleLogout = React.useCallback(async () => {
     const res = await logoutAPI();
@@ -69,7 +71,7 @@ const LayoutDefault = () => {
     },
     {
       key: 'change-password',
-      label: <Link to="/change-password">Đổi mật khẩu</Link>,
+      label: <p onClick={() => setOpenChangePassword(true)}>Đổi mật khẩu</p>,
       icon: <LockOutlined />
     },
     {
@@ -137,6 +139,11 @@ const LayoutDefault = () => {
       <ProfilePage
         openProfile={openProfile}
         setOpenProfile={setOpenProfile}
+      />
+
+      <ChangePassword
+        openChangePassword={openChangePassword}
+        setOpenChangePassword={setOpenChangePassword}
       />
     </>
   )

@@ -25,7 +25,7 @@ const LoginPage = () => {
       message.success("Đăng nhập thành công!");
       dispatch(login({ user: res.data.user }));
       localStorage.setItem("access_token", res.data.access_token);
-      navigate("/");
+      navigate("/categories");
     } else {
       message.error(res.message);
     }
