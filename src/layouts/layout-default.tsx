@@ -6,12 +6,13 @@ import LogoSider from "assets/logo-sider.png";
 import LogoSiderWrap from "assets/logo-sider-wrap.png";
 import { Layout, Menu, type MenuProps } from "antd";
 import { useDispatch } from "react-redux";
-import { DashboardOutlined, FormOutlined, LockOutlined, LogoutOutlined, PayCircleOutlined, TagsOutlined, TeamOutlined, ToolOutlined, UsergroupAddOutlined, UserOutlined } from "@ant-design/icons";
+import { FormOutlined, LockOutlined, LogoutOutlined, PayCircleOutlined, TagsOutlined, ToolOutlined, UsergroupAddOutlined, UserOutlined } from "@ant-design/icons";
 import { logoutAPI } from "services/auth.service";
-import { logout } from "@/redux/auth/authSlice";
+import { logout } from "redux/auth/authSlice";
 
 const { Sider, Content } = Layout;
 const HeaderComponent = React.lazy(() => import("layouts/header-component"));
+const ProfilePage = React.lazy(() => import("pages/profile"));
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -21,6 +22,7 @@ const LayoutDefault = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [collapsed, setCollapsed] = React.useState<boolean>(false);
+  const [openProfile, setOpenProfile] = React.useState<boolean>(false);
 
   const handleLogout = React.useCallback(async () => {
     const res = await logoutAPI();
@@ -33,11 +35,6 @@ const LayoutDefault = () => {
 
   const menuItem: MenuItem[] = React.useMemo(() => [
     {
-      key: 'dashboard',
-      label: <Link to="/">Tổng quan</Link>,
-      icon: <DashboardOutlined />
-    },
-    {
       key: 'categories',
       label: <Link to="/categories">Kiểu tài sản</Link>,
       icon: <TagsOutlined />
@@ -47,11 +44,6 @@ const LayoutDefault = () => {
       label: <Link to="/assets">Tài sản</Link>,
       icon: <PayCircleOutlined />
     },
-    // {
-    //   key: 'staffs',
-    //   label: <Link to="/staffs">Nhân viên</Link>,
-    //   icon: <TeamOutlined />
-    // },
     {
       key: 'suppliers',
       label: <Link to="/suppliers">Nhà cung cấp</Link>,
@@ -72,7 +64,7 @@ const LayoutDefault = () => {
     },
     {
       key: 'profile',
-      label: <Link to="/profile">Hồ sơ cá nhân</Link>,
+      label: <p onClick={() => setOpenProfile(true)}>Hồ sơ cá nhân</p>,
       icon: <UserOutlined />
     },
     {
@@ -120,7 +112,7 @@ const LayoutDefault = () => {
           collapsed={collapsed}
         >
           <div className="h-65px flex justify-center border-b border-b-[#edf2f9] cursor-pointer border-r border-r-[#edf2f9]">
-            <Link to="/">
+            <Link to="/categories">
               <img src={collapsed ? LogoSiderWrap : LogoSider} className="object-contain " />
             </Link>
           </div>
@@ -141,6 +133,11 @@ const LayoutDefault = () => {
           </Content>
         </Layout>
       </Layout >
+
+      <ProfilePage
+        openProfile={openProfile}
+        setOpenProfile={setOpenProfile}
+      />
     </>
   )
 }

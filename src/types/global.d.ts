@@ -125,4 +125,13 @@ declare global {
     updatedBy: IUpdatedBy;
     updatedAt: string;
   }
+
+  interface IProfile {
+    _id: string;
+    fullName: string;
+    email: string;
+    phone: string;
+    gender: string;
+    address: string;
+  }
 }
